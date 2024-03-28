@@ -1,0 +1,106 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f2f5ff;
+  }
+  
+  .login-container {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('bgimage.svg') center/cover no-repeat;
+    /* filter: blur(5px); Optional: Apply blur effect to the background */
+  }
+  
+  .login-box {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    border-radius: 15px;
+  }
+  
+  .logo-container h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333; /* Change color as needed */
+  }
+  
+  .login-text {
+    margin-top: 10px;
+    color: #555; /* Change color as needed */
+  }
+  
+  .login-form {
+    margin-top: 20px;
+  }
+  
+  .grp1 {
+    margin-bottom: 15px;
+  }
+  
+  .ladel {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .inputw {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #893487; /* Change color as needed */
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .login-button:hover{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #893487 !important;
+    background-color: #fff; /* Change color as needed */
+    color: #893487;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .forgot-password {
+    margin-top: 10px;
+  }
+  .inputbox3{
+    border: 1px solid gray ;
+  }
+  
+  .forgot-password p {
+    margin: 0;
+    color: #555; /* Change color as needed */
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .forgot-password p:hover{
+    text-decoration: none;
+  }
+  
+  
+  /* Media Query for responsiveness */
+  @media (max-width: 600px) {
+    .login-box {
+      width: 80%;
+    }
+  }
+  

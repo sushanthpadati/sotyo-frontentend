@@ -1,0 +1,370 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  color:#000;
+  background-color: #fff;
+}
+
+.gender {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 140px;
+  /* Adjust the width to your desired spacing */
+}
+
+/* Add margin to the right of the first two icons */
+.gendercircle:first-child {
+  margin-right: 5px;
+  /* Adjust the margin as needed */
+}
+
+/* Add margin to the left of the last icon */
+.gendercircle:last-child {
+  margin-left: 5px;
+  /* Adjust the margin as needed */
+}
+
+
+.gendercircle {
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: #F5F5F5;
+  border-radius: 50%;
+  line-height: 70px;
+  text-align: center;
+  font-size: 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.gendercircle:hover {
+  background-color: #893487;
+  color: #fff;
+  cursor: pointer;
+}
+
+.gendercircle.active {
+  background-color: #893487;
+  /* Set the background color for the selected radio button */
+  color: white;
+  /* Set the text color for the selected radio button */
+  /* Add a border-radius to make it round */
+}
+
+.marital {
+  width: 100%;
+
+}
+
+.maritals {
+  width: 100%;
+
+}
+
+
+.maritalcircles {
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 2% 0;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.maritalcircles:hover {
+  background-color: #893487;
+  color: #fff;
+  cursor: pointer;
+}
+
+.maritalcircles.active {
+  background-color: #893487;
+  /* Set the background color for the selected radio button */
+  color: white;
+  /* Set the text color for the selected radio button */
+  /* Add a border-radius to make it round */
+}
+
+.maritalcircle {
+  /* width: 40%; */
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 2% 0;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: .15rem !important;
+  margin: 0.15rem !important;
+}
+
+.maritalcircle:hover {
+  background-color: #893487;
+  color: #fff;
+  cursor: pointer;
+}
+
+.maritalcircle.active {
+  background-color: #893487;
+  /* Set the background color for the selected radio button */
+  color: white;
+  /* Set the text color for the selected radio button */
+  /* Add a border-radius to make it round */
+}
+
+.organ {
+  width: 100%;
+
+}
+
+.organcircle {
+  width: 100%;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 2% 0;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.organcircle:hover {
+  background-color: #893487;
+  color: #fff;
+  cursor: pointer;
+}
+
+.organcircle.active {
+  background-color: #893487;
+  /* Set the background color for the selected radio button */
+  color: white;
+  /* Set the text color for the selected radio button */
+  /* Add a border-radius to make it round */
+}
+
+.tagbutton {
+  background-color: #893487;
+  color: #fff;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0.5% 1%;
+  text-align: center;
+  font-size: 1rem;
+  border: 1px solid #893487;
+  border-radius: 10px;
+}
+
+.form-switch-color {
+  color: rgba(#893487, 0.25);
+}
+
+.titl {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.pulser {
+  width: 30px;
+  height: 30px;
+  background: #893487;
+  border-radius: 50%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  /* Set text color to white */
+}
+
+.pulser::after {
+  animation: pulse 1000ms cubic-bezier(0.9, 0.7, 0.5, 0.9) infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0.4;
+  }
+}
+
+.pulser::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #893487;
+  border-radius: 50%;
+  z-index: -1;
+}
+
+.sexsss {
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.inputblocks {
+  border: 1px solid #000;
+  color: #000;
+  /* border-radius: 50px; */
+}
+
+.inputblocks2 {
+  background-color: #893487;
+  color: #fff;
+  font-weight: 600;
+}
+
+.tagorgan {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.butss {
+  visibility: hidden;
+}
+
+.rass {
+  padding-left: 80%;
+}
+
+.megha {
+  background-color: #795CED;
+  color: #fff;
+}
+.patientid {
+  margin-top: 2%;
+  background-color: rgb(211, 215, 215);
+  border-radius: 35px;
+  text-align: center;
+  width: 100%;
+}
+
+.pathed {
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+@media print {
+  .print-text {
+    color: blue;
+    /* Text color */
+  }
+
+  .print-background {
+    background-color: yellow;
+    /* Background color */
+  }
+}
+
+/* print-styles.css */
+
+/* Apply styles to the entire print content container */
+#print-content {
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Style the header with a dark background and white text */
+.head {
+  background-color: #893487;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Apply styles to headings */
+h1 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+h4 {
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+/* Style the patient information section */
+#patient-information {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(211, 215, 215);
+}
+
+/* Apply styles to individual patient details */
+#patient-information p {
+  margin: 0;
+  font-weight: bold;
+}
+
+/* Additional styling for other sections of your content... */
+
+/* Style the print button */
+.text-center button {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Add more styling for tables, paragraphs, and other elements as needed... */
+.loading-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.loading-content {
+  background: #fff;
+  padding: 20px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.progress {
+  height: 100%;
+  background: #893487;
+  border-radius: 10px;
+}
+@font-face {
+  font-family: rajsatyam;
+  src: url(ink-free.otf);
+}
+
+.rtsp{
+  font-family: rajsatyam;
+  letter-spacing: 2.8px;
+  text-decoration: none;
+}
+.plinks:hover{
+  text-decoration: underline;
+}

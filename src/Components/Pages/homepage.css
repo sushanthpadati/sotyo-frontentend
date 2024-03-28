@@ -1,0 +1,96 @@
+.body{
+    background-color: #fff;
+}
+.top-nav{
+    height:10px;
+    background-color: #893487;
+}
+.navbar-brand{
+    color: #893487;
+    font-weight: 700;
+    font-size: 1.8rem;
+}
+.nav-link{
+    font-size: 1rem;
+    color: #464545 !important;
+    font-weight: 600;
+}
+@keyframes slideFromBottom {
+0% {
+    transform: translateY(100%);
+    opacity: 0;
+}
+100% {
+    transform: translateY(0);
+    opacity: 1;
+}
+}
+
+@keyframes slideFromRight {
+0% {
+    transform: translateX(100%);
+    opacity: 0;
+}
+100% {
+    transform: translateX(0);
+    opacity: 1;
+}
+}
+
+.animate-from-bottom {
+animation: slideFromBottom 1s ease-out;
+}
+
+.animate-from-right {
+animation: slideFromRight 1.5s ease-out;
+}
+.card-title{
+color: #893487;
+font-weight: 700;
+}
+.card-text{
+color: #635f63;
+}
+/* @keyframes fadeInUp {
+0% {
+    opacity: 0;
+    transform: translateY(20px);
+}
+100% {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+.animate-fadeInUp {
+animation: fadeInUp 1s ease-out;
+} */
+.reveal{
+position: relative;
+transform: translateY(20px);
+opacity: 0;
+transition: all 2s ease;
+}
+.reveal.active{
+transform: translateY(0px);
+opacity: 1;
+}
+.card {
+transition: transform 0.3s ease-in-out;
+}
+
+.cards:hover {
+transform: scale(1.1);
+}
+.circle-container {
+position: relative;
+}
+
+.dotted-line {
+height: 100px; /* Adjust the height of the dotted line */
+border-top: 2px dotted #893487;
+width: 1px;
+}
+/* .navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;..");
+  } */

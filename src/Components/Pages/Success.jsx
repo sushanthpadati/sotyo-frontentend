@@ -1,0 +1,720 @@
+import React, { useState, useEffect, useRef } from 'react';
+import BWIPJS from 'bwip-js';
+import Barcode from 'react-barcode';
+function Success(props) {
+  const { selectedpatientID } = props;
+  const [userData, setUserData] = useState({});
+
+  useEffect(() => {
+    fetch(`http://3.16.11.52:5000/get_user_data?patient_id=${selectedpatientID}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('API Response:', data);
+        setUserData(data);
+      })
+      .catch((error) => {
+        console.error('API request error:', error);
+      });
+  }, [selectedpatientID]);
+  
+
+ 
+
+  function calculateAge(dob) {
+    const birthDate = new Date(dob);
+    const currentDate = new Date();
+
+    let years = currentDate.getFullYear() - birthDate.getFullYear();
+    let months = currentDate.getMonth() - birthDate.getMonth();
+    const days = currentDate.getDate() - birthDate.getDate();
+
+    if (months < 0 || (months === 0 && days < 0)) {
+      years--;
+      months += 12;
+    }
+
+    return `${years} years, ${months} months, ${days} days`;
+  }
+
+  const handlePrint = () => {
+    const contentToPrint = document.getElementById('print-content');
+
+    if (contentToPrint) {
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = contentToPrint.outerHTML;
+
+      window.print();
+
+      // Restore the original content
+      document.body.innerHTML = originalContents;
+    } else {
+      console.error("Content to print not found.");
+    }
+  };
+
+
+  
+  const barcodeRef = useRef(null);
+
+  useEffect(() => {
+    // Fetch user data and set it in the state
+    // ...
+
+    // Generate the barcode
+    generateBarcode(selectedpatientID);
+  }, [selectedpatientID]);
+
+  const generateBarcode = (patientID) => {
+    const canvas = barcodeRef.current;
+
+    // Make sure the canvas is a valid element
+    if (!canvas || !canvas.getContext) {
+      console.error('Canvas not found or is invalid.');
+      return;
+    }
+
+    const bw = new BWIPJS(canvas);
+    bw.toCanvas({
+      bcid: 'code128',  // Use the desired barcode format
+      text: patientID,  // The text to encode in the barcode
+      scale: 3,        // Adjust the scale as needed
+      width: 120,       // Set the barcode width (adjust as needed)
+      height: 50,   
+      includetext: false, // Exclude human-readable text
+      textxalign: 'center', // Adjust text alignment
+      textsize: 0,     // Set the barcode height (adjust as needed)
+    }, (err, canvas) => {
+      if (err) {
+        console.error(err);
+      } else {
+        // Barcode has been generated successfully
+        // The canvas variable now contains the barcode image
+      }
+    });
+  };
+  
+  
+
+  const formatDateAndTime = (timestamp) => {
+    const date = new Date(timestamp);
+    const formattedDate = date.toLocaleDateString();
+   
+    return `${formattedDate}`;
+  };
+  
+  let dosage1 = null;
+  
+  
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 25) {
+      dosage1 = 'Levofloxacin 250mg';
+    } else if (30 <= userData.weight && userData.weight <= 45) {
+      dosage1 = 'Levofloxacin 750mg';
+    } else if (userData.weight > 46) {
+      dosage1 = 'Levofloxacin 1000mg';
+    }
+  }
+  let dosage2 = null;
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 29) {
+      dosage2 = 'Clofazimine 50mg';
+    } else if (30 <= userData.weight && userData.weight <= 70) {
+      dosage2 = 'Clofazimine 100mg';
+    } else if (userData.weight > 70) {
+      dosage2 = 'Clofazimine 200mg';
+    }
+  }
+  
+  let dosage3 = null;
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 29) {
+      dosage3 = 'Isoniazid 300mg';
+    } else if (30 <= userData.weight && userData.weight <= 45) {
+      dosage3 = 'Isoniazid 600mg';
+    } else if (userData.weight > 46) {
+      dosage3 = 'Isoniazid 900mg';
+    }
+  }
+
+  let dosage4 = null;
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 29) {
+      dosage4 = 'Pyrazinamide 750mg';
+    } else if (30 <= userData.weight && userData.weight <= 45) {
+      dosage4 = 'Pyrazinamide 1250mg';
+    } else if (46 <= userData.weight && userData.weight <= 70) {
+      dosage4 = 'Pyrazinamide 1750mg';
+    }else if (userData.weight > 70) {
+      dosage4 = 'Pyrazinamide 2000mg';
+    }
+  }
+
+  let dosage5 = null;
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 29) {
+      dosage5 = 'Ethambutol 400mg';
+    } else if (30 <= userData.weight && userData.weight <= 45) {
+      dosage5 = 'Ethambutol 800mg';
+    } else if (46 <= userData.weight && userData.weight <= 70) {
+      dosage5 = 'Ethambutol 1200mg';
+    }else if (userData.weight > 70) {
+      dosage5 = 'Ethambutol 1600mg';
+    }
+  }
+
+  let dosage6 = null;
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 29) {
+      dosage6 = 'Ethionamide 375mg';
+    } else if (30 <= userData.weight && userData.weight <= 45) {
+      dosage6 = 'Ethionamide 500mg';
+    } else if (46 <= userData.weight && userData.weight <= 70) {
+      dosage6 = 'Ethionamide 750mg';
+    }else if (userData.weight > 70) {
+      dosage6 = 'Ethionamide 1000mg';
+    }
+  }
+
+  let dosage7 = null;
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 29) {
+      dosage7 = 'Linezolid 300mg';
+    } else if (userData.weight > 30) {
+      dosage7 = 'Linezolid 600mg';
+    }
+  }
+
+  let dosage8 = null;
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 29) {
+      dosage8 = 'Cycloserine 250mg';
+    } else if (30 <= userData.weight && userData.weight <= 45) {
+      dosage8 = 'Cycloserine 500mg';
+    } else if (46 <= userData.weight && userData.weight <= 70) {
+      dosage8 = 'Cycloserine 750mg';
+    }else if (userData.weight > 70) {
+      dosage8 = 'Cycloserine 1000mg';
+    }
+  }
+  let dosage9 = null;
+  if (userData.weight) {
+    if (16 <= userData.weight && userData.weight <= 29) {
+      dosage9 = 'Rifampicin 300mg';
+    } else if (30 <= userData.weight && userData.weight <= 45) {
+      dosage9 = 'Rifampicin 450mg';
+    }else if (userData.weight > 46) {
+      dosage9 = 'Rifampicin 600mg';
+    }
+  }
+  
+  let dosage10 = null;
+  if (userData.weight) {
+    if (25 <= userData.weight && userData.weight <= 34) {
+      dosage10 = '2';
+    } else if (35 <= userData.weight && userData.weight <= 49) {
+      dosage10 = '3';
+    } else if (50 <= userData.weight && userData.weight <= 64) {
+      dosage10 = '4';
+    }else if (65 <= userData.weight && userData.weight <= 75) {
+      dosage10 = '5';
+    }else if (userData.weight > 75) {
+      dosage10 = '6';
+    }
+  }
+
+  let dosage11 = null;
+  if(userData.weight) {
+    if(16 <= userData.weight && userData.weight <= 29){
+      dosage11 = 'Pyridoxine 50mg';
+    } else if (userData.weight > 30){
+      dosage11 = 'Pyridoxine 100mg'
+    }
+  }
+
+  let dosage12 = null;
+  if(userData.weight) {
+    if(16 <= userData.weight && userData.weight <= 29){
+      dosage12 = 'Levofloxacin 250mg';
+    } else if (30 <= userData.weight && userData.weight <= 45){
+      dosage12 = 'Levofloxacin 750mg'
+    }else if(userData.weight > 46){
+      dosage12 = 'Levofloxacin 1000mg'
+    }
+  }
+
+  let dosage13 = null;
+  if(userData.weight){
+    if(16 <= userData.weight && userData.weight <=29){
+      dosage13 = "Moxifloxacin 200mg";
+    } else if(userData.weight > 30){
+      dosage13 = "Moxifloxacin 400mg";
+    }
+  }
+  
+  const medicationsToCheck = {
+    'Rifamycins': [
+      'Disopyramide', 'mexiletine', 'quinidine', 'tocainide', 'Chloramphenicol', 'clarithromycin', 'dapsone',
+      'doxycycline', 'fluoroquinolones', 'Quinine', 'INSTI', 'Nevirapine', 'Phenobarbital', 'Diazepam',
+      'Propranolol', 'Digoxin', 'Prednisone', 'Clofibrate', 'Sulfonylureas', 'Ethinyl oestradiol / levonorgestrel',
+      'Cyclosporine/ tacrolimus', 'Methadone', 'Phosphodiesterase-5 (PDE-5) Inhibitors', 'Levothyroxine'
+    ],
+    'Isoniazid': [
+      'Halofantrine', 'Ritonavir (ARV)', 'Efavirenz', 'Diazepam', 'triazolam', 'Levomethyldate acetate'
+    ],
+    'Rifamycins & Isoniazid': [
+      'Phenytoin', 'carbamazepine', 'primidone', 'valproic acid', 'PI', 'Amitriptyline/ nortriptyline',
+      'Warfarin', 'Haloperidol', 'Fluconazole', 'itraconazole', 'ketoconazole', 'Theophylline'
+    ]
+  };
+  
+  let displayMessages = [];
+  
+  if (userData.currentmedicationsoption) {
+    const userMedications = userData.currentmedicationsoption.split(',').map(item => item.trim());
+  
+    for (const group in medicationsToCheck) {
+      const matchingMedications = userMedications.filter(medication => medicationsToCheck[group].includes(medication));
+  
+      if (matchingMedications.length > 0) {
+        const description = getDescriptionForGroup(group);
+        displayMessages.push(
+          <p style={{ fontSize: '.9rem' }} key={group}>
+             <b>{matchingMedications.join(', ')}:</b> {description}
+          </p>
+        );
+      }
+    }
+  }
+  
+  function getDescriptionForGroup(group) {
+    // Define descriptions for each group here
+    const descriptions = {
+      'Rifamycins': 'Rifamycins accelerating metabolism and decreasing blood levels',
+      'Isoniazid': 'Isoniazid inhibiting metabolism and increasing blood levels',
+      'Rifamycins & Isoniazid': 'Rifamycins accelerating metabolism and decreasing blood levels & Isoniazid inhibiting metabolism and increasing blood levels'
+    };
+    
+    return descriptions[group] || group; // Default to group name if no description is found
+  }
+
+
+  const adverseReactions = userData.adversereaction ? userData.adversereaction.split(',').map(item => item.trim()) : [];
+
+  const reactionsMap = {
+    'QT prolongation': 'Fluoroquinolones',
+    'Psychotic symptoms': 'Isoniazid / Fluoroquinolones',
+    'Suicidal ideation': 'Isoniazid / Ethionamide',
+    'Gastrointestinal symptoms': 'Isoniazid / Ethionamide / Pyrazinamide / Ethambutol / Bedaquiline / Clofazimine / Fluoroquinolones',
+    'Seizures': 'Isoniazid / Fluoroquinolones',
+    'Tendonitis and tendon rupture': 'Fluoroquinolones',
+    'Diarrhea / flatulence': 'Ethionamide',
+    'Metallic taste': 'Ethionamide / Fluoroquinolones',
+    'Arthralgia': 'Pyrazinamide / Bedaquiline / Fluoroquinolones',
+    'Peripheral neuropathy': 'Isoniazid / Ethionamide (Rarely) / Ethambutol / Fluoroquinolones',
+    'Dysglycemia and hyperglycemia': 'Ethionamide',
+    'Anaphylaxis': 'Any Drug',
+    'Vestibular toxicity (tinnitus and dizziness)': 'Isoniazid / Ethionamide / Fluoroquinolones',
+    'Gynecomastia': 'Ethionamide',
+    'Depression': 'Isoniazid / Ethionamide / Fluoroquinolones',
+    'Rash': 'Any Drug',
+    'Hepatitis': 'Isoniazid / Ethionamide / Pyrazinamide / Bedaquiline',
+    'Hypothyroidism': 'Ethionamide',
+    'Superficial fungal Infection and thrush': 'Fluoroquinolones',
+    'Optic neuritis': 'Isoniazid / Ethionamide / Ethambutol / Linezolid / Clofazimine',
+    'Headache': 'Bedaquiline',
+    'Giddiness': 'Ethionamide / Pyrazinamide / Fluoroquinolones',
+    'Alopecia': 'Isoniazid / Ethionamide',
+    // Add other adverse reactions here
+  };
+  let message = [];
+  const adverseBreathSound = userData.breathsound ? userData.breathsound.split(',').map(item => item.trim()) : [];
+  
+  if (adverseBreathSound.includes('Decreased Breath Sounds')) {
+    message = (
+      <span>
+        <strong>Decreased Breath Sounds</strong> on{' '}
+        <strong>{userData.dbslateralityoptionsopt}</strong>
+      </span>
+    );
+  }
+  let message1 = [];
+  
+  if (adverseBreathSound.includes('Crackles')) {
+    message1 = (
+      <span>, &nbsp;
+        <strong>Crackles</strong> on{' '}
+        <strong>{userData.crackleslateralityoptionsopt}</strong>
+      </span>
+    );
+  }
+  let message2 = [];
+  
+  if (adverseBreathSound.includes('Pleural Rub')) {
+    message2 = (
+      <span>,&nbsp;
+        <strong>Pleural Rub</strong> on{' '}
+        <strong>{userData.prlateralityoptionsopt}</strong>
+      </span>
+    );
+  }
+  let message3 = [];
+  
+  if (adverseBreathSound.includes('Rhonchi')) {
+    message3 = (
+      <span>,&nbsp;
+        <strong>Rhonchi</strong> on{' '}
+        <strong>{userData.rhonchilateralityoptionsopt}</strong>
+      </span>
+    );
+  }
+
+  let message4 = [];
+  
+  if (adverseBreathSound.includes('Stridor')) {
+    message4 = (
+      <span>,&nbsp;
+        <strong>Stridor</strong> on{' '}
+        <strong>{userData.stridorlateralityoptionsopt}</strong>
+      </span>
+    );
+  }
+  let message5 = [];
+  
+  if (adverseBreathSound.includes('Wheezing')) {
+    message5 = (
+      <span>,&nbsp;
+        <strong>Wheezing</strong> on{' '}
+        <strong>{userData.wheezinglateralityoptionsopt}</strong>
+      </span>
+    );
+  }
+  let message6 = [];
+  if (adverseBreathSound.includes('Bronchial Breath Sounds')) {
+    message6 = (
+      <span>,&nbsp;
+        <strong>Bronchial Breath Sounds</strong> on{' '}
+        <strong>{userData.bbslateralityoptionsopt}</strong>
+      </span>
+    );
+  }
+
+const medicationOptions = userData.currentmedicationsoption ? userData.currentmedicationsoption.split(',') : [];
+
+// Define the options to exclude
+const excludedOptions = ["None of the above1", "None of the above2", "None of the above3", "None of the above4", "None of the above5", "None of the above6", "None of the above7", "None of the above8", "None of the above9", "None of the above10", "None of the above11", "None of the above12", "None of the above13"];
+
+const filteredOptions = medicationOptions
+  .map(option => option.trim())
+  .filter(trimmedOption => !excludedOptions.includes(trimmedOption))
+  .join(', ');
+
+  const formattedChiefComplaints = userData && userData.chiefcomplaints
+  ? userData.chiefcomplaints.split(',').map(item => item.trim()).join(', ')
+  : '';
+  const formattedsubstanceabuse = userData && userData.substanceabuse
+  ? userData.substanceabuse.split(',').map(item => item.trim()).join(', ')
+  : '';
+
+const formattedchestimaging = userData && userData.chestimaging
+  ? userData.chestimaging.split(',').map(item => item.trim()).join(', ')
+  : '';
+
+const formattedcnfdiagnosis = userData && userData.cnfdiagnosis
+  ? userData.cnfdiagnosis.split(',').map(item => item.trim()).join(', ')
+  : '';
+  const capitalizeFirstLetter = (string) => {
+    if (string) {
+      // Convert the first letter to uppercase and the rest of the string to lowercase
+      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+    } else {
+      return ''; // Return an empty string if the input is undefined or null
+    }
+  };
+  
+  let dosageToShow;
+
+  if (userData.mdrxdroption === 'Levofloxacin') {
+    dosageToShow = dosage13;
+  } else if (userData.mdrxdroption === 'Moxifloxacin') {
+    dosageToShow = dosage12;
+  } else {
+    // Handle other cases or provide a default value
+    dosageToShow = '';
+  }
+  return (
+    <>
+      <div id="print-content">
+        <div className="container mt-4 mb-4" style={{ border: '1px solid rgb(211, 215, 215)', padding: '0px' }}>
+          <div className="head p-4" style={{ backgroundColor: '#893487', color: '#fff' }}>
+            <h1 style={{ fontSize: '1.2rem' }}><b>Branding Hospital Name</b></h1>
+            
+          </div>
+          <div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+          <h4 className="mt-4 ps-4" style={{ fontWeight: '600' }}>PATIENT INFORMATION</h4><div ref={barcodeRef}></div>
+          </div>
+          <div className="col-md-6">
+  
+        <div className="barcode text-right" style={{marginLeft:'64%'}}>
+          <Barcode value={selectedpatientID} height={50} width={1} />
+          </div>
+          </div>
+          </div>
+          <div className="mt-4" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgb(211, 215, 215)' }}>
+            <p className="ps-4" style={{ marginBottom: '0px' }}><b>Name:</b>  {capitalizeFirstLetter(userData.firstname)} {capitalizeFirstLetter(userData.lastname)}</p>
+            <p className="" style={{ marginBottom: '0px' }}><b>Patient ID:</b> {selectedpatientID}</p>
+            <p className="pe-4" style={{ marginBottom: '0px' }}><b>Sex:</b> {capitalizeFirstLetter(userData.sex)}</p>
+          </div>
+          <div className="mt-4" style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgb(211, 215, 215)' }}>
+            <p className="ps-4" style={{ marginBottom: '0px' }}><b>Age:</b> {calculateAge(userData.dob)}</p>
+            <p className="" style={{ marginBottom: '0px' }}><b>Marital Status:</b> {userData.marital}</p>
+            <p className="pe-4" style={{ marginBottom: '0px' }}><b>Weight:</b> {userData.weight} Kg</p>
+          </div>
+          <div style={{fontSize:'.9rem'}} className="content mt-4">
+            <p className="ps-4"><b>Date of Admission:</b> {formatDateAndTime(userData.created_at)}</p>
+            <p className="ps-4"><b>HIV Status:</b> {userData.hivoption}</p>
+            <p className="ps-4"><b>Chief Complaints:</b> The patient presents with <b> {formattedChiefComplaints}.</b></p>
+            <p className="ps-4"><b>Past Medical History:</b> Clinical evaluation reveals a notable past medical history marked by <b> {[
+      userData.respiratorysystemoption,
+      userData.cardiovascularsystemoption,
+      userData.renalsystemoption
+    ]
+      .filter(option => option) // Filter out empty options
+      .join(', ')
+      .replace(/,+/g, ', ')}
+    .</b></p>
+            <p className="ps-4"><b>Substance Abuse:</b> The patient's history reveals a pattern of substance abuse involving <b>{formattedsubstanceabuse}.</b></p>
+            <p className="ps-4"><b>Breath Sound:</b> Clinical assessment notes the presence of abnormal breath sounds, including  {message}  {message1} {message2} {message3} {message4} {message5}  {message6}. </p>
+            <p className="ps-4"><b>Past Surgical History:</b>The patient had surgery in the past for <b>{userData.pastsurgicalhistoryoption}.</b></p>
+            <p className="ps-4"><b>Chest Imaging:</b>  The Chest Imaging <b>{formattedchestimaging}</b> are avilable.</p>
+            <p className="ps-4"><b>Current Medications:</b> The patient is currently taking <b> {filteredOptions}.</b></p>
+            <p className="ps-4"><b>Diagnosis:</b>The patient has been diagnosed with <b> {userData.diagnosis === 'Drug Resistance TB' ? (
+  // Render the options when userData.diagnosis is 'Drug Resistance TB'
+  <span>
+  {userData.resistancetboption} </span>
+) : (
+  // Render userData.diagnosis when it's not 'Drug Resistance TB'
+  <span>{userData.diagnosis}</span>
+)}</b> by <b>{formattedcnfdiagnosis}.</b></p>
+            <br></br>
+            <div className="ps-4" style={{fontSize:'1.1rem'}}><b>Treatment Advised:</b> 
+            <br/><br/>
+            <h5 style={{fontSize:'.9rem'}}><b>1. Treatment Medication:</b></h5>
+            {userData.resistancetboption === 'MDR/RR-TB R resistance detected and FQ resistance not detected' && (
+            <div className="container">
+              <p></p>
+              <table className="table table-bordered " style={{border:'1px solid #000'}}>
+                <thead>
+                  <tr >
+                    <th scope="col" style={{backgroundColor:'#893487',color:'#fff'}} className='text-center' colSpan="3">INTENSIVE PHASE (4-6 Months) </th>
+                    <th scope="col"  style={{backgroundColor:'#893487',color:'#fff'}} className='text-center'> CONTINUATION PHASE (After4-6 Months)</th>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="col" className='text-center' >Regular Medicine</th>
+                    <th scope="col" className='text-center' >First 2 Weeks</th>
+                    <th scope="col" className='text-center' >3-24 Weeks</th>
+                    <th scope="col" className='text-center' >Regular Medicine</th>
+                    {/* <th scope="col" className='text-center' >First 2 Weeks</th>
+                    <th scope="col" className='text-center' >3-24 Weeks</th> */}
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}>
+                      {dosage1} <br/>
+                      {dosage2} <br/>
+                      {dosage3} <br/>
+                      {dosage4} <br/>
+                      {dosage5} <br/>
+                      {dosage6} <br/>
+                      {dosage11} <br/>
+                    </td>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}> Bedaquiline 400mg/daily</td>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}>Bedaquiline 200mg/3 times/week</td>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}>{dosage1} <br/>
+                      {dosage2} <br/>
+                      {dosage3} <br/>
+                      {dosage5} <br/>
+                      {dosage11} </td>
+                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            )}
+
+            {userData.resistancetboption === 'MDR/XDR TB R resistance detected and FQ resistance detected' && (
+            <div className="container">
+              <p></p>
+              <table className="table table-bordered " style={{border:'1px solid #000'}}>
+                <thead>
+                  <tr >
+                    <th scope="col" style={{backgroundColor:'#893487',color:'#fff'}} className='text-center' colSpan="3">18-20 Months</th>
+                    
+                  </tr>
+                  <tr>
+                    <th scope="col" className='text-center' >Regular Medicine</th>
+                    <th scope="col" className='text-center' >First 2 Weeks</th>
+                    <th scope="col" className='text-center' >3-24 Weeks</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}>
+                      {dosageToShow} <br/>
+                      {dosage2} <br/>
+                      {dosage7} <br/>
+                      {dosage8} <br/>
+                      {dosage11} <br/>
+                    </td>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}> Bedaquiline 400mg/daily</td>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}> Bedaquiline 200mg/ 3 times /Week</td>
+                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            )}
+
+            {userData.diagnosis === 'Drug Sensitive TB' && (
+            <div className="container">
+              <p></p>
+              <table className="table table-bordered " style={{border:'1px solid #000'}}>
+                <thead>
+                  <tr >
+                    <th scope="col" style={{backgroundColor:'#893487',color:'#fff'}} className='text-center' colSpan="3">INTENSIVE PHASE 
+                    (8 Weeks) </th>
+                    <th scope="col" style={{backgroundColor:'#893487',color:'#fff'}} className='text-center' colSpan="3">CONTINUOUS PHASE (16 Weeks)</th>
+                    
+                    
+                  </tr>
+                  <tr>
+                    <th scope="col" className='text-center' >Medicine</th>
+                    <th scope="col" className='text-center' >No. of tablet per doages</th>
+                    <th scope="col" className='text-center' >No. of Doages</th>
+                    <th scope="col" className='text-center' >Medicine</th>
+                    <th scope="col" className='text-center' >No. of tablet per doages</th>
+                    <th scope="col" className='text-center' >No. of Doages</th>
+                    {/* <th scope="col" className='text-center' >First 2 Weeks</th>
+                    <th scope="col" className='text-center' >3-24 Weeks</th> */}
+
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}>
+                    {dosage3} <br/>
+                      {dosage4} <br/>
+                      {dosage5} <br/>
+                      {dosage9} <br/>
+                      {dosage11} <br/>
+                      HRZE (4 FDC), 75/150/400/275mg
+                    </td>
+                    <td className='text-center' style={{fontSize:'1rem', fontWeight:'500'}}> 
+                    <br />
+                    <br />
+                    <br />
+                    <br/><br/>
+                    {dosage10}</td>
+                    <td className='text-center' style={{fontSize:'1rem', fontWeight:'500'}}><br />
+                    <br />
+                    <br />
+                    <br/><br/>
+                    56</td>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}>{dosage3} <br/>
+                      {dosage5} <br/>
+                      {dosage9} <br/>
+                      HRE (3 FDC), 75/150/275mg</td>
+                      <td className='text-center' style={{fontSize:'1rem', fontWeight:'500'}}> 
+                    <br />
+                    <br />
+                    <br />
+                    {dosage10}</td>
+                    <td className='text-center' style={{fontSize:'1rem', fontWeight:'500'}}><br />
+                    <br />
+                    <br />
+                    112</td>
+                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            )}
+            {userData.resistancetboption === 'H MONO-POLY (H resistance detected and R resistance not detected)' && (
+            <div className="container">
+              <p></p>
+              <table className="table table-bordered " style={{border:'1px solid #000'}}>
+                <thead>
+                  <tr >
+                    <th scope="col" style={{backgroundColor:'#893487',color:'#fff'}} className='text-center' colSpan={6}>ALL ORAL H-MONO-POLY DR TB Regimen 6/9 months
+</th>
+                    
+                    
+                  </tr>
+                  <tr>
+                    <th scope="col" className='text-center' >Medicine</th>
+                    {/* <th scope="col" className='text-center' >First 2 Weeks</th>
+                    <th scope="col" className='text-center' >3-24 Weeks</th> */}
+
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    <td style={{fontSize:'1rem', fontWeight:'500'}}>
+                      {dosage12} <br/>
+                      {dosage9} <br/>
+                      {dosage5} <br/>
+                      {dosage4} <br/>
+                      {dosage11} <br/>
+                    </td>
+                   
+                     
+                  
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            )}
+            <br/>
+            <div className="container">
+              <h5 style={{fontSize:'.9rem'}}><b>2. Current Medication Interactions:</b></h5>
+              <p className='ms-4'>
+              {displayMessages}</p>
+            </div>
+            <br/>
+            <div className="container">
+              <h5 style={{fontSize:'.9rem'}}><b>3. Adverse Reaction:</b></h5>
+              <p className='ms-4'>
+              {adverseReactions.map((reaction, index) => (
+        <p style={{fontSize:'.9rem'}} key={index}> <b>{reaction} </b>Probable cause of this adverse reaction is <b>{reactionsMap[reaction]|| 'No specific information available for this adverse reaction.'}</b></p>
+      ))}</p>
+            </div>
+
+              
+            </div>
+          </div>
+          <hr></hr>
+          <div className="text-center mt-4">
+            <button className="btn btn-primary" onClick={handlePrint}>
+              Print
+            </button>
+          </div>
+          <br></br>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Success;
